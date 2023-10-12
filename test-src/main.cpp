@@ -1,4 +1,5 @@
 #include "../src/options_manager.h"
+#include <iostream>
 
 int main(int argc, char **argv)
 {
@@ -15,6 +16,16 @@ int main(int argc, char **argv)
         return 0;
     }
 
+    if (manager.is_present("v"))
+    {
+        std::cout << "cclip test 0.0.1" << std::endl;
+        return 0;
+    }
+
+    if (manager.is_present("f") && manager.get_option("f")->argument != nullptr)
+    {
+        std::cout << "File: " << manager.get_option("f")->argument << std::endl;
+    }
 
     return 0;
 }
