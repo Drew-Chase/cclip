@@ -126,7 +126,6 @@ namespace cclip
         }
 
 
-        // TODO: make sure to delete this memory allocation.
         size_t length = buf.str().length() + 1;
         char *help_str = new char[length];
         strcpy_s(help_str, length, buf.str().c_str());
