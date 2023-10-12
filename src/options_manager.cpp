@@ -35,7 +35,7 @@ namespace cclip
                     option *opt = this->get_option_from_global_list(name);
                     if (opt == nullptr)
                     {
-                        std::cerr << "Unknown option: " << name << std::endl;
+                        std::cerr << "Unknown option: --" << name << std::endl;
                         this->print_help();
                         exit(1);
                     } else
@@ -59,7 +59,7 @@ namespace cclip
                     option *opt = this->get_option_from_global_list(name);
                     if (opt == nullptr)
                     {
-                        std::cerr << "Unknown option: " << name << std::endl;
+                        std::cerr << "Unknown option: -" << name << std::endl;
                         this->print_help();
                         exit(1);
                     } else
@@ -137,7 +137,7 @@ namespace cclip
     {
         for (auto &option: this->present_options)
         {
-            if (option->short_name == name || option->long_name == name)
+            if (std::strcmp(option->short_name, name) == 0 || std::strcmp(option->long_name, name) == 0)
             {
                 return true;
             }
@@ -150,7 +150,7 @@ namespace cclip
     {
         for (auto &option: this->present_options)
         {
-            if (option->short_name == name || option->long_name == name)
+            if (std::strcmp(option->short_name, name) == 0 || std::strcmp(option->long_name, name) == 0)
             {
                 return option;
             }
@@ -162,7 +162,7 @@ namespace cclip
     {
         for (auto &option: this->options)
         {
-            if (option->short_name == name || option->long_name == name)
+            if (std::strcmp(option->short_name, name) == 0 || std::strcmp(option->long_name, name) == 0)
             {
                 return option;
             }
