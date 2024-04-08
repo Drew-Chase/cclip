@@ -11,8 +11,8 @@ git clone https://github.com/Drew-Chase/cclip.git ./vendor/cclip
 ```bash
 git submodule add https://github.com/Drew-Chase/cclip.git ./vendor/cclip
 ```
-
-
+### Manual
+Download the latest release from the [releases page](https://github.com/Drew-Chase/cclip/releases) and extract the options_manager.hpp to your project's directory.
 
 ## Usage
 
@@ -21,7 +21,7 @@ git submodule add https://github.com/Drew-Chase/cclip.git ./vendor/cclip
 Here is an example of how to use the `cclip` library to parse command-line arguments in a C++ program:
 
 ```cpp
-#include "cclip/options_manager.h"
+#include "cclip/options_manager.hpp"
 #include <iostream>
 
 int main(int argc, char **argv) {
