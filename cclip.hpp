@@ -1,13 +1,12 @@
 #pragma once
-
 #ifndef CCOMMANDLINEPARSER_OPTIONS_MANAGER_H
 #define CCOMMANDLINEPARSER_OPTIONS_MANAGER_H
+#if __cplusplus >= 201703L // C++17 or later
 
 #include <algorithm>
 #include <vector>
 #include <iostream>
 #include <sstream>
-#include <sec_api/string_s.h>
 
 using namespace std;
 
@@ -256,4 +255,7 @@ namespace cclip
         return nullptr;
     }
 } // cclip
+#else
+#error "C++17 or later is required."
+#endif // C++17 or later
 #endif //CCOMMANDLINEPARSER_OPTIONS_MANAGER_H
