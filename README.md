@@ -3,6 +3,9 @@
 `cclip` is a simple C/C++ library for parsing command line arguments. It allows you to define and parse command-line options and arguments easily in your C or C++ applications.
 
 ## Installation
+> ### **NOTE:**   
+> This library is header-only, so you don't need to build or install anything. Just include the `cclip.hpp` header file in your project.   
+> Also this project requires a C++17 compatible compiler.
 ### Github Clone
 ```bash
 git clone https://github.com/Drew-Chase/cclip.git ./vendor/cclip
