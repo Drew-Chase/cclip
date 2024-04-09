@@ -24,7 +24,7 @@ Download the latest release from the [releases page](https://github.com/Drew-Cha
 Here is an example of how to use the `cclip` library to parse command-line arguments in a C++ program:
 
 ```cpp
-#include "cclip/options_manager.hpp"
+#include "cclip/cclip.hpp"
 #include <iostream>
 
 int main(int argc, char **argv) {
