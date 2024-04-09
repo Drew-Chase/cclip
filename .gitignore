@@ -430,3 +430,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/.idea/deployment.xml
+/.idea/editor.xml
+/.idea/material_theme_project_new.xml
+/.idea/misc.xml
+/.idea/workspace.xml
+/cmake-build-debug/CMakeFiles/clion-Debug-log.txt
