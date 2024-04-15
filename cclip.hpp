@@ -1,12 +1,14 @@
 #pragma once
-#ifndef CCOMMANDLINEPARSER_OPTIONS_MANAGER_H
-#define CCOMMANDLINEPARSER_OPTIONS_MANAGER_H
-#if __cplusplus >= 201703L // C++17 or later
+
+#ifndef CCLIP_H
+#define CCLIP_H
 
 #include <algorithm>
+#include <cstring>
 #include <vector>
 #include <iostream>
 #include <sstream>
+// #include <sec_api/string_s.h>
 
 using namespace std;
 
@@ -218,8 +220,7 @@ namespace cclip
 
         const size_t length = buf.str().length() + 1;
         const auto help_str = new char[length];
-        strcpy_s(help_str, length, buf.str().c_str());
-
+        strcpy(help_str, buf.str().c_str());
         return help_str;
     }
 
@@ -255,7 +256,4 @@ namespace cclip
         return nullptr;
     }
 } // cclip
-#else
-#error "C++17 or later is required."
-#endif // C++17 or later
 #endif //CCOMMANDLINEPARSER_OPTIONS_MANAGER_H
