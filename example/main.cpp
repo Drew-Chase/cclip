@@ -1,8 +1,8 @@
 // LFInteractive LLC. (c) 2020-2024 All Rights Reserved
-#include "cclip.hpp"
+#include "../cclip.hpp"
 #include <iostream>
 
-int main(int argc, char** argv)
+int main(const int argc, char** argv)
 {
 	cclip::options_manager manager("cclip test");
 	manager.add_option("h", "help", "Print this help message", false, false);
