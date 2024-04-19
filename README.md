@@ -61,6 +61,11 @@ To add a little color to your output, you can use the [ANSIConsoleColors](https:
 #include "cclip/cclip.hpp"
 ```
 
+![image](https://github.com/Drew-Chase/cclip/assets/5598099/be68abbf-36d6-4e39-8abe-b2ef94334051)
+![image](https://github.com/Drew-Chase/cclip/assets/5598099/057d8848-9515-416c-a5ce-ef1577091852)
+
+
+
 
 
 
