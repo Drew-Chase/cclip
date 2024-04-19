@@ -129,7 +129,13 @@ namespace cclip
                     const char *name = arg + 2;
                     if (option *opt = this->get_option_from_global_list(name); opt == nullptr)
                     {
+#ifdef ANSIConsoleColors
+                        colors::ConsoleColors::SetForegroundColor(colors::ColorCodes::Red);
+#endif
                         std::cerr << "Unknown option: --" << name << std::endl;
+#ifdef ANSIConsoleColors
+                        colors::ConsoleColors::ResetConsoleColor();
+#endif
                         this->print_help();
                         exit(1);
                     } else
@@ -138,7 +144,14 @@ namespace cclip
                         {
                             if (i + 1 >= argc)
                             {
+#ifdef ANSIConsoleColors
+                                colors::ConsoleColors::SetForegroundColor(colors::ColorCodes::Red);
+#endif
                                 std::cerr << "Missing argument for option: " << name << std::endl;
+
+#ifdef ANSIConsoleColors
+                                colors::ConsoleColors::ResetConsoleColor();
+#endif
                                 this->print_help();
                                 exit(1);
                             }
@@ -177,7 +190,13 @@ namespace cclip
         {
             if (option->is_required && !this->is_present(option->short_name))
             {
+#ifdef ANSIConsoleColors
+                colors::ConsoleColors::SetForegroundColor(colors::ColorCodes::Red);
+#endif
                 std::cerr << "Missing required option: -" << option->short_name << " or --" << option->long_name << std::endl;
+#ifdef ANSIConsoleColors
+                colors::ConsoleColors::ResetConsoleColor();
+#endif
                 missing = true;
             }
         }
@@ -203,20 +222,44 @@ namespace cclip
 
         for (auto &option: this->options)
         {
-            buf << " -" << option->short_name << ", --" << option->long_name;
+            buf <<
+#ifdef ANSIConsoleColors
+                    colors::ConsoleColors::GetColorCode(colors::ColorCodes::Blue) <<
+#endif
+
+                    " -"
+                    << option->short_name << ", " <<
+
+#ifdef ANSIConsoleColors
+                    colors::ConsoleColors::GetColorCode(colors::ColorCodes::Cyan) <<
+#endif
+                    "--"
+                    << option->long_name;
             if (option->has_argument)
             {
                 buf << " <arg>";
             }
             if (option->is_required)
             {
-                buf << " (required)";
+                buf <<
+#ifdef ANSIConsoleColors
+                colors::ConsoleColors::GetColorCode(colors::ColorCodes::Red)
+                        <<
+#endif
+                         " (required)";
             }
 
-
-            buf << "\n\t" << option->description << "\n";
+            buf <<
+#ifdef ANSIConsoleColors
+                    colors::ConsoleColors::GetColorCode(colors::ColorCodes::Green)
+                    <<
+#endif
+                    "\n\t" << option->description << "\n";
         }
 
+#ifdef ANSIConsoleColors
+        buf << colors::ConsoleColors::GetColorCode(colors::ColorCodes::Default);
+#endif
 
         const size_t length = buf.str().length() + 1;
         const auto help_str = new char[length];
@@ -256,4 +299,4 @@ namespace cclip
         return nullptr;
     }
 } // cclip
-#endif //CCOMMANDLINEPARSER_OPTIONS_MANAGER_H
+#endif
