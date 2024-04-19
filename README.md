@@ -23,7 +23,7 @@ Download the latest release from the [releases page](https://github.com/Drew-Cha
 
 Here is an example of how to use the `cclip` library to parse command-line arguments in a C++ program:
 
-```cpp
+```c++
 #include "cclip/cclip.hpp"
 #include <iostream>
 
@@ -52,6 +52,17 @@ int main(int argc, char **argv) {
     return 0;
 }
 ```
+
+## Colorful Output
+To add a little color to your output, you can use the [ANSIConsoleColors](https://github.com/drew-chase/ANSIConsoleColors) library, and add the header above the `cclip` header.
+
+```c++
+#include "ANSIConsoleColors/ANSIConsoleColors.h"
+#include "cclip/cclip.hpp"
+```
+
+
+
 
 ### `options_manager` Class
 
