@@ -246,7 +246,7 @@ namespace cclip
                 colors::ConsoleColors::GetColorCode(colors::ColorCodes::Red)
                         <<
 #endif
-                         " (required)";
+                        " (required)";
             }
 
             buf <<
@@ -291,7 +291,7 @@ namespace cclip
     {
         for (const auto &option: this->options)
         {
-            if (option->short_name == name || option->long_name == name)
+            if (std::strcmp(option->short_name, name.c_str()) == 0 || std::strcmp(option->long_name, name.c_str()) == 0)
             {
                 return option;
             }
