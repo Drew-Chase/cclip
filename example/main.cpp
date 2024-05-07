@@ -4,11 +4,15 @@
 
 int main(const int argc, char **argv)
 {
-    cclip::options_manager manager("cclip test");
+    cclip::options_manager manager("CCLIP Example", "This is an example of the cclip library. cclip library is a lightweight command-line argument parsing tool for C++ applications.");
     manager.add_option("h", "help", "Print this help message", false, false);
     manager.add_option("v", "version", "Print the version", false, false);
     manager.add_option("V", "verbose", "Prints to the console verbosly", false, false);
     manager.add_option("f", "file", "The file to read", true, true);
+
+    manager.set_version("0.0.1");
+    manager.add_example_usage(R"(-f C:\Users\user\Desktop\file.txt)");
+    manager.add_example_usage(R"(-f "C:\Users\user with space\Desktop\file.txt")");
 
     manager.parse(argc, argv);
 
@@ -20,7 +24,7 @@ int main(const int argc, char **argv)
 
     if (manager.is_present("v"))
     {
-        std::cout << "cclip test 0.0.1" << std::endl;
+        manager.print_version();
         return 0;
     }
 
