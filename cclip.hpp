@@ -8,7 +8,6 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
-// #include <sec_api/string_s.h>
 
 using namespace std;
 
@@ -48,17 +47,57 @@ namespace cclip
         const char *context;
         vector<option *> options;
         vector<option *> present_options;
+        vector<const char *> example_usages;
+        const char *version;
+        const char* description;
 
         option *get_option_from_global_list(const std::string &name);
 
     public:
         /**
-         * Create a new options manager.
-         * @param context the application context (e.g. "myapp" or "My App")
+         * Constructor for options_manager class.
+         *
+         * @param context The context of the options manager.
+         * @param description The description of the options manager.
          */
-        explicit options_manager(const char *context);
+        explicit options_manager(const char *context, const char* description = nullptr);
 
-        ~options_manager() = default;
+        /**
+         * Add an example usage to the options manager.
+         * @param example_usage the example usage to add
+         */
+        void add_example_usage(const char *example_usage);
+
+        /**
+         * Set the version of the options manager.
+         *
+         * @param version the version string to set (e.g. "1.0.0")
+         */
+        void set_version(const char *version);
+
+        /**
+         * Get the version of the options manager.
+         *
+         * @return the version string
+         */
+        const char *get_version();
+
+        /**
+         * Get the version of the options manager.
+         *
+         * @return the version string
+         */
+        [[nodiscard]] char *get_version() const;
+
+        /**
+         * Print the version of the options manager to the standard output.
+         */
+        void print_version() const;
+
+        /**
+         * Print examples of how to use the options manager.
+         */
+        void print_examples() const;
 
         /**
          * Add an option to the options manager.
@@ -81,7 +120,7 @@ namespace cclip
         /**
          * Print the help message to stdout.
          */
-        void print_help() const;
+        void print_help(bool print_examples = true) const;
 
         /**
          * Get the help message. This is useful if you want to print the help message to a file or something.<br>
@@ -105,9 +144,69 @@ namespace cclip
         option *get_option(const std::string &name);
     };
 
-    inline options_manager::options_manager(const char *context)
+    inline options_manager::options_manager(const char *context, const char* description)
     {
         this->context = context;
+        this->description = description;
+        this->version = nullptr;
+    }
+
+    inline void options_manager::add_example_usage(const char *example_usage)
+    {
+        this->example_usages.push_back(example_usage);
+    }
+
+    inline void options_manager::set_version(const char *version)
+    {
+        this->version = version;
+    }
+
+    inline const char *options_manager::get_version()
+    {
+        return this->version;
+    }
+
+    inline void options_manager::print_version() const
+    {
+        if (this->version != nullptr)
+        {
+            std::cout <<
+#ifdef ANSIConsoleColors
+                    colors::ConsoleColors::GetColorCode(colors::ColorCodes::Green) <<
+#endif
+                    this->context << " " <<
+#ifdef ANSIConsoleColors
+                    colors::ConsoleColors::GetColorCode(colors::ColorCodes::Yellow) <<
+#endif
+                    this->version <<
+#ifdef ANSIConsoleColors
+                    colors::ConsoleColors::GetColorCode(colors::ColorCodes::Default) <<
+#endif
+                    std::endl;
+        }
+    }
+
+    inline void options_manager::print_examples() const
+    {
+        std::cout <<
+#ifdef ANSIConsoleColors
+                colors::ConsoleColors::GetColorCode(colors::ColorCodes::Yellow) <<
+#endif
+                "Example Usages:" <<
+#ifdef ANSIConsoleColors
+                colors::ConsoleColors::GetColorCode(colors::ColorCodes::Blue) <<
+#endif
+                std::endl;
+        for (const auto &example_usage: this->example_usages)
+        {
+            std::cout <<
+                    example_usage <<
+                    std::endl;
+        }
+
+#ifdef ANSIConsoleColors
+        colors::ConsoleColors::ResetConsoleColor();
+#endif
     }
 
     inline option *options_manager::add_option(const char *short_name, const char *long_name, const char *description, const bool is_required, const bool has_argument)
@@ -202,23 +301,39 @@ namespace cclip
         }
         if (missing)
         {
-            //            std::cerr << std::endl;
             this->print_help();
             exit(1);
         }
     }
 
-    inline void options_manager::print_help() const
+    inline void options_manager::print_help(const bool print_examples) const
     {
         const char *help = this->get_help();
+        if (print_examples)
+        {
+            this->print_examples();
+        }
         std::cout << help << std::endl;
-        delete[] help; // Deletes the memory allocated by get_help()
+        delete(help); // Deletes the memory allocated by get_help()
     }
+
 
     inline const char *options_manager::get_help() const
     {
         std::stringstream buf;
-        buf << this->context << " Help:\n";
+        buf <<
+#ifdef ANSIConsoleColors
+                colors::ConsoleColors::GetColorCode(colors::ColorCodes::Magenta) <<
+#endif
+                this->context << " Help:\n";
+        if(this->description != nullptr)
+        {
+            buf <<
+#ifdef ANSIConsoleColors
+                colors::ConsoleColors::GetColorCode(colors::ColorCodes::LightGray) <<
+#endif
+                this->description << "\n";
+        }
 
         for (auto &option: this->options)
         {
@@ -243,7 +358,7 @@ namespace cclip
             {
                 buf <<
 #ifdef ANSIConsoleColors
-                colors::ConsoleColors::GetColorCode(colors::ColorCodes::Red)
+                        colors::ConsoleColors::GetColorCode(colors::ColorCodes::Red)
                         <<
 #endif
                         " (required)";
@@ -251,7 +366,7 @@ namespace cclip
 
             buf <<
 #ifdef ANSIConsoleColors
-                    colors::ConsoleColors::GetColorCode(colors::ColorCodes::Green)
+                    colors::ConsoleColors::GetColorCode(colors::ColorCodes::LightGray)
                     <<
 #endif
                     "\n\t" << option->description << "\n";
