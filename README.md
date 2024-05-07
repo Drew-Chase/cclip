@@ -64,7 +64,13 @@ if (manager.is_present("h")) {
 ```
 
 ### Getting an Option
-
+The `option` represents an individual command-line option. It contains the following fields:
+- `short_name`: The short name of the option (e.g. -h).
+- `long_name`: The long name of the option (e.g. --help).
+- `description`: The description of the option.
+- `is_required`: Whether the option is required.
+- `has_argument`: Whether the option has an argument.
+- `argument`: The argument of the option.
 ```c++
 if (manager.is_present("f")) {
     auto option = manager.get_option("f");
@@ -144,27 +150,6 @@ To add a little color to your output, you can use the [ANSIConsoleColors](https:
 ![image](https://github.com/Drew-Chase/cclip/assets/5598099/be68abbf-36d6-4e39-8abe-b2ef94334051)
 ![image](https://github.com/Drew-Chase/cclip/assets/5598099/057d8848-9515-416c-a5ce-ef1577091852)
 
-### `options_manager` Class
-
-The `options_manager` class is the core of the `cclip` library. It allows you to define and parse command-line options. Here are some of its key functions:
-
-- `options_manager::add_option`: Add a new option with a short name, long name, description, and properties.
-- `options_manager::parse`: Parse the command line arguments.
-- `options_manager::print_help`: Print the help message.
-- `options_manager::get_help`: Get the help message as a C-style string. Remember to delete the returned string when you're done with it.
-- `options_manager::is_present`: Check if an option is present in the arguments.
-- `options_manager::get_option`: Get an option by name.
-
-### `option` Struct
-
-The `option` struct represents an individual command-line option. It contains the following fields:
-
-- `short_name`: The short name of the option (e.g. -h).
-- `long_name`: The long name of the option (e.g. --help).
-- `description`: The description of the option.
-- `is_required`: Whether or not the option is required.
-- `has_argument`: Whether or not the option has an argument.
-- `argument`: The argument of the option.
 
 ## Contributing
 
