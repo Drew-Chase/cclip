@@ -1,6 +1,6 @@
 # cclip - C/C++ Command Line Interface Parser
 
-`cclip` is a simple C/C++ library for parsing command line arguments. It allows you to define and parse command-line options and arguments easily in your C or C++ applications.
+`cclip` is a simple C++ library for parsing command line arguments. It allows you to define and parse command-line options and arguments easily in your C++ applications.
 
 ## Installation
 
@@ -64,13 +64,16 @@ if (manager.is_present("h")) {
 ```
 
 ### Getting an Option
+
 The `option` represents an individual command-line option. It contains the following fields:
+
 - `short_name`: The short name of the option (e.g. -h).
 - `long_name`: The long name of the option (e.g. --help).
 - `description`: The description of the option.
 - `is_required`: Whether the option is required.
 - `has_argument`: Whether the option has an argument.
 - `argument`: The argument of the option.
+
 ```c++
 if (manager.is_present("f")) {
     auto option = manager.get_option("f");
@@ -149,7 +152,6 @@ To add a little color to your output, you can use the [ANSIConsoleColors](https:
 
 ![image](https://github.com/Drew-Chase/cclip/assets/5598099/be68abbf-36d6-4e39-8abe-b2ef94334051)
 ![image](https://github.com/Drew-Chase/cclip/assets/5598099/057d8848-9515-416c-a5ce-ef1577091852)
-
 
 ## Contributing
 
