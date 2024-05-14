@@ -1,0 +1,14 @@
+{
+	"name": "cclip-hpp-generator",
+	"version": "0.0.1",
+	"description": "Generates a single header file for the cclip library",
+	"main": "generate-hpp.js",
+	"scripts": {
+		"generate": "node generate-hpp.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Drew-Chase/cclip.git"
+	},
+	"private": true
+}
