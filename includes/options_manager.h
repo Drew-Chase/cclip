@@ -6,7 +6,6 @@
 #include <iostream>
 #include <sstream>
 #include "option.h"
-using namespace std;
 
 namespace cclip
 {
@@ -14,9 +13,9 @@ namespace cclip
     {
     private:
         const char *context;
-        vector<option *> options;
-        vector<option *> present_options;
-        vector<const char *> example_usages;
+        std::vector<option *> options;
+        std::vector<option *> present_options;
+        std::vector<const char *> example_usages;
         const char *version;
         const char *description;
 
@@ -75,16 +74,17 @@ namespace cclip
          * @param description the description of the option
          * @param is_required whether or not the option is required
          * @param has_argument whether or not the option has an argument
+         * @param executes_before_requires  Whether or not the option executes before it requires any other options. This means that if required options are not present but this is, the missing required options will be ignored. This is great for help and version options.
          * @return the option that was added
          */
-        option *add_option(const char *short_name, const char *long_name, const char *description, bool is_required, bool has_argument);
+        option *add_option(const char *short_name, const char *long_name, const char *description, bool is_required, bool has_argument, bool executes_before_requires = false);
 
         /**
          * Parse the command line arguments.
          * @param argc the number of arguments
          * @param argv the arguments
          */
-        void parse(int argc, char **argv);
+        void parse(int argc,  char **argv);
 
         /**
          * Print the help message to stdout.
