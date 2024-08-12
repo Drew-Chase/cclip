@@ -5,12 +5,14 @@
 int main(const int argc, char **argv)
 {
     cclip::options_manager manager("CCLIP Example", "This is an example of the cclip library. cclip library is a lightweight command-line argument parsing tool for C++ applications.");
-    manager.add_option("h", "help", "Print this help message", false, false);
-    manager.add_option("v", "version", "Print the version", false, false);
+    // These will run even if the required options are not present
+    manager.add_option("h", "help", "Print this help message", false, false, true);
+    manager.add_option("v", "version", "Print the version", false, false, true);
+
     manager.add_option("V", "verbose", "Prints to the console verbosly", false, false);
     manager.add_option("f", "file", "The file to read", true, true);
 
-    manager.set_version("0.0.1");
+    manager.set_version(CCLIP_VERSION);
     manager.add_example_usage(R"(-f C:\Users\user\Desktop\file.txt)");
     manager.add_example_usage(R"(-f "C:\Users\user with space\Desktop\file.txt")");
 
@@ -38,5 +40,5 @@ int main(const int argc, char **argv)
     {
         std::cout << "File: " << manager.get_option("f")->argument << std::endl;
     }
-    system("pause");
+    // system("pause");
 }
