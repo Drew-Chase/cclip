@@ -13,7 +13,10 @@ const legalHeader = `/**
     The primary purpose of CClip is to make the parsing of command-line options easier, providing a structured and consistent way to manage command-line inputs. 
     It enables developers to define specific command-line options and arguments that their applications can accept. Once these options are defined, CClip allows them to be easily parsed and retrieved when the application is run, reducing the complexity associated with command-line input handling. 
     The parsing functionality provided by CClip is intuitive and efficient, making it an ideal choice for any C++ application that requires command-line input functionality.
+    For more information please visit our github page at https://github.com/Drew-Chase/cclip
 */`
+
+const version= '0.0.7';
 
 let content = '';
 // Include the content of all header files
@@ -25,7 +28,7 @@ for (const include of includes) {
 // Include the content of all source files
 for (const source of sources) {
     let sourceFileContent = fs.readFileSync(path.join(sourceDirectory, source), 'utf8');
-    sourceFileContent = removeLocalIncludes(sourceFileContent);
+    content += removeLocalIncludes(sourceFileContent);
 }
 
 function removeLocalIncludes(content) {
@@ -44,6 +47,6 @@ function removeLocalIncludes(content) {
 }
 
 content = content.replace(/#pragma once/g, '');
-content = `${legalHeader}\n\n#pragma once\n\n${content}`
+content = `${legalHeader}\n\n#pragma once\n#define CCLIP_VERSION "${version}"\n${content}`
 
 fs.writeFileSync(outputFile, content);
