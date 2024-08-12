@@ -28,6 +28,12 @@ namespace cclip
          */
         bool has_argument;
         /**
+         * Whether or not the option executes before it requires any other options.
+         * This means that if required options are not present but this is, the missing required options will be ignored.
+         * This is great for help and version options.
+         */
+        bool executes_before_requires;
+        /**
          * The argument of the option.
          */
         char *argument;
