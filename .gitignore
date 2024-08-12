@@ -438,4 +438,4 @@ FodyWeavers.xsd
 /cmake-build-debug/CMakeFiles/clion-Debug-log.txt
 bin/
 
-cclip.hpp
+#cclip.hpp
