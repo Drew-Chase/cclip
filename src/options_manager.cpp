@@ -1,6 +1,8 @@
 #pragma once
 
 #include "options_manager.h"
+
+#include <iostream>
 using namespace cclip;
 
 inline options_manager::options_manager(const char *context, const char *description)
@@ -68,9 +70,9 @@ inline void options_manager::print_examples() const
 #endif
 }
 
-inline option *options_manager::add_option(const char *short_name, const char *long_name, const char *description, const bool is_required, const bool has_argument)
+inline option *options_manager::add_option(const char *short_name, const char *long_name, const char *description, const bool is_required, const bool has_argument, const bool executes_before_requires)
 {
-    auto *opt = new option{short_name, long_name, description, is_required, has_argument};
+    auto *opt = new option{short_name, long_name, description, is_required, has_argument, executes_before_requires, nullptr};
     this->options.push_back(opt);
     return opt;
 }
@@ -143,25 +145,37 @@ inline void options_manager::parse(const int argc, char **argv)
             }
         }
     }
-    bool missing = false;
+    bool ignore_missing = false;
     for (const auto &option: this->options)
     {
-        if (option->is_required && !this->is_present(option->short_name))
+        if (option->executes_before_requires && this->is_present(option->short_name))
         {
+            ignore_missing = true;
+            break;
+        }
+    }
+    if (!ignore_missing)
+    {
+        bool missing = false;
+        for (const auto &option: this->options)
+        {
+            if (option->is_required && !this->is_present(option->short_name))
+            {
 #ifdef ANSIConsoleColors
                 colors::ConsoleColors::SetForegroundColor(colors::ColorCodes::Red);
 #endif
-            std::cerr << "Missing required option: -" << option->short_name << " or --" << option->long_name << std::endl;
+                std::cerr << "Missing required option: -" << option->short_name << " or --" << option->long_name << std::endl;
 #ifdef ANSIConsoleColors
                 colors::ConsoleColors::ResetConsoleColor();
 #endif
-            missing = true;
+                missing = true;
+            }
         }
-    }
-    if (missing)
-    {
-        this->print_help();
-        exit(1);
+        if (missing)
+        {
+            this->print_help();
+            exit(1);
+        }
     }
 }
 
