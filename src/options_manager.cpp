@@ -1,33 +1,30 @@
-#pragma once
-
 #include "options_manager.h"
 
 #include <iostream>
-using namespace cclip;
 
-inline options_manager::options_manager(const char *context, const char *description)
+inline cclip::options_manager::options_manager(const char *context, const char *description)
 {
     this->context = context;
     this->description = description;
     this->version = nullptr;
 }
 
-inline void options_manager::add_example_usage(const char *example_usage)
+inline void cclip::options_manager::add_example_usage(const char *example_usage)
 {
     this->example_usages.push_back(example_usage);
 }
 
-inline void options_manager::set_version(const char *version)
+inline void cclip::options_manager::set_version(const char *version)
 {
     this->version = version;
 }
 
-inline const char *options_manager::get_version()
+inline const char *cclip::options_manager::get_version()
 {
     return this->version;
 }
 
-inline void options_manager::print_version() const
+inline void cclip::options_manager::print_version() const
 {
     if (this->version != nullptr)
     {
@@ -47,7 +44,7 @@ inline void options_manager::print_version() const
     }
 }
 
-inline void options_manager::print_examples() const
+inline void cclip::options_manager::print_examples() const
 {
     std::cout <<
 #ifdef ANSIConsoleColors
@@ -70,14 +67,14 @@ inline void options_manager::print_examples() const
 #endif
 }
 
-inline option *options_manager::add_option(const char *short_name, const char *long_name, const char *description, const bool is_required, const bool has_argument, const bool executes_before_requires)
+inline cclip::option *cclip::options_manager::add_option(const char *short_name, const char *long_name, const char *description, const bool is_required, const bool has_argument, const bool executes_before_requires)
 {
     auto *opt = new option{short_name, long_name, description, is_required, has_argument, executes_before_requires, nullptr};
     this->options.push_back(opt);
     return opt;
 }
 
-inline void options_manager::parse(const int argc, char **argv)
+inline void cclip::options_manager::parse(const int argc, char **argv)
 {
     for (int i = 0; i < argc; ++i)
     {
@@ -179,7 +176,7 @@ inline void options_manager::parse(const int argc, char **argv)
     }
 }
 
-inline void options_manager::print_help(const bool print_examples) const
+inline void cclip::options_manager::print_help(const bool print_examples) const
 {
     const char *help = this->get_help();
     if (print_examples)
@@ -191,7 +188,7 @@ inline void options_manager::print_help(const bool print_examples) const
 }
 
 
-inline const char *options_manager::get_help() const
+inline const char *cclip::options_manager::get_help() const
 {
     std::stringstream buf;
     buf <<
@@ -255,7 +252,7 @@ inline const char *options_manager::get_help() const
     return help_str;
 }
 
-inline bool options_manager::is_present(const std::string &name) const
+inline bool cclip::options_manager::is_present(const std::string &name) const
 {
     return std::any_of(this->present_options.begin(), this->present_options.end(), [&name](const option *opt)
     {
@@ -263,7 +260,7 @@ inline bool options_manager::is_present(const std::string &name) const
     });
 }
 
-inline option *options_manager::get_option(const std::string &name)
+inline cclip::option *cclip::options_manager::get_option(const std::string &name)
 {
     for (const auto &option: this->present_options)
     {
@@ -275,7 +272,7 @@ inline option *options_manager::get_option(const std::string &name)
     return nullptr;
 }
 
-inline option *options_manager::get_option_from_global_list(const std::string &name)
+inline cclip::option *cclip::options_manager::get_option_from_global_list(const std::string &name)
 {
     for (const auto &option: this->options)
     {
