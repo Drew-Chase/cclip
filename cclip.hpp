@@ -7,7 +7,7 @@
 */
 
 #pragma once
-#define CCLIP_VERSION "0.0.8"
+#define CCLIP_VERSION "0.0.9"
 
 
 #ifndef OPTION_H
@@ -374,19 +374,26 @@ inline const char *cclip::options_manager::get_help() const
 
     for (auto &option: this->options)
     {
-        buf <<
+        if (option->short_name[0])
+        {
+            buf <<
 #ifdef ANSIConsoleColors
                     colors::ConsoleColors::GetColorCode(colors::ColorCodes::Blue) <<
 #endif
+                    "-" << option->short_name;
+            if (option->long_name[0])
+                buf << ", ";
+        }
 
-                " -"
-                << option->short_name << ", " <<
-
+        if (option->long_name[0])
+        {
+            buf <<
 #ifdef ANSIConsoleColors
                     colors::ConsoleColors::GetColorCode(colors::ColorCodes::Cyan) <<
 #endif
-                "--"
-                << option->long_name;
+                    "--" << option->long_name;
+        }
+
         if (option->has_argument)
         {
             buf << " <arg>";
