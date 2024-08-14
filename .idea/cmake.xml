@@ -3,7 +3,7 @@
   <component name="CMakeSharedSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" GENERATION_DIR="bin/obj/cmake/debug" CONFIG_NAME="Debug" />
-      <configuration PROFILE_NAME="Release" ENABLED="true" GENERATION_DIR="bin/obj/cmake/release" CONFIG_NAME="Release" />
+      <configuration PROFILE_NAME="Release" ENABLED="false" GENERATION_DIR="bin/obj/cmake/release" CONFIG_NAME="Release" />
     </configurations>
   </component>
 </project>
