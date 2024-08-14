@@ -17,7 +17,10 @@ int main(const int argc, char **argv)
     manager.add_example_usage(R"(-f C:\Users\user\Desktop\file.txt)");
     manager.add_example_usage(R"(-f "C:\Users\user with space\Desktop\file.txt")");
 
+
+
     manager.parse(argc, argv);
+    std::cout << manager.build_autocomplete_ps1() << std::endl;
 
     if (manager.is_present("h"))
     {
