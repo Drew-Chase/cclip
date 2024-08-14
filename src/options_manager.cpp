@@ -1,5 +1,6 @@
 #include "options_manager.h"
 
+#include <filesystem>
 #include <iostream>
 
 inline cclip::options_manager::options_manager(const char *context, const char *description)
@@ -76,6 +77,7 @@ inline cclip::option *cclip::options_manager::add_option(const char *short_name,
 
 inline void cclip::options_manager::parse(const int argc, char **argv)
 {
+    this->command_name = std::filesystem::path(argv[0]).stem().string(); // Get the executable name
     for (int i = 0; i < argc; ++i)
     {
         if (const char *arg = argv[i]; arg[0] == '-')
@@ -289,4 +291,42 @@ inline cclip::option *cclip::options_manager::get_option_from_global_list(const 
         }
     }
     return nullptr;
+}
+
+char *cclip::options_manager::build_autocomplete_ps1() const
+{
+    if (this->command_name.empty())
+    {
+        throw std::runtime_error("Command name is not set, make sure to run after parsing the command line arguments.");
+    }
+    std::string options;
+
+    for (const auto &option: this->options)
+    {
+        if (option->short_name[0])
+        {
+            options += "'-";
+            options += option->short_name;
+            options += "', ";
+        }
+
+        if (option->long_name[0])
+        {
+            options += "'--";
+            options += option->long_name;
+            options += "', ";
+        }
+    }
+    options = options.substr(0, options.length() - 2); // Remove the trailing comma and space
+
+    std::string ps1 =
+            "# " + std::string(this->context) + " command-line autocomplete\n"
+            "Register-ArgumentCompleter -CommandName '" + this->command_name + "' -ScriptBlock {\n"
+            "param($commandName, $wordToComplete, $cursorPosition)\n"
+            "$options = " + options + "\n\n"
+            "$options | Where-Object { $_ -like \"$wordToComplete * \" } | ForEach-Object {\n"
+            "[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterName', $_)\n"
+            "}\n"
+            "}\n";
+    return strdup(ps1.c_str());
 }
