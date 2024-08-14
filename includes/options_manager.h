@@ -18,6 +18,7 @@ namespace cclip
         std::vector<const char *> example_usages;
         const char *version;
         const char *description;
+        std::string command_name;
 
         option *get_option_from_global_list(const std::string &name);
 
@@ -84,7 +85,7 @@ namespace cclip
          * @param argc the number of arguments
          * @param argv the arguments
          */
-        void parse(int argc,  char **argv);
+        void parse(int argc, char **argv);
 
         /**
          * Print the help message to stdout.
@@ -111,5 +112,34 @@ namespace cclip
          * @return the option
          */
         option *get_option(const std::string &name);
+
+        /**
+         * Builds a PowerShell script snippet for autocomplete feature.
+         *
+         * This method constructs a PowerShell script snippet that can be used as a
+         * completion script for cclip-example command. The script snippet registers
+         * an argument completer for the command, which provides autocompletion for
+         * command options.
+         *
+         * The constructed script snippet iterates over the list of options in the
+         * options_manager object and adds their short names and long names to the
+         * list of options. The short names are enclosed in single quotes followed by a
+         * hyphen, and the long names are preceded by two hyphens. The list of options
+         * is then joined as a string, with each option separated by a comma and a space.
+         * The trailing comma and space are removed.
+         *
+         * Finally, the script block is created, which takes three parameters: the
+         * commandName, the wordToComplete, and the cursorPosition. The script block
+         * assigns the constructed list of options to a variable called $options.
+         * It then filters the options using the wordToComplete and checks for a partial
+         * match with the options in the list. For each matching option, a
+         * System.Management.Automation.CompletionResult object is created with the
+         * option as the display text, the option as the completion text, 'ParameterName'
+         * as the completion type, and the option as the tooltip. The completion results
+         * are output as the result of the script block.
+         *
+         * @return The PowerShell script snippet as a C-string.
+         */
+        char *build_autocomplete_ps1() const;
     };
 }
