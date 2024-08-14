@@ -11,6 +11,7 @@ int main(const int argc, char **argv)
 
     manager.add_option("V", "verbose", "Prints to the console verbosly", false, false);
     manager.add_option("f", "file", "The file to read", true, true);
+    manager.add_option("", "format", "The format of the file", false, true);
 
     manager.set_version(CCLIP_VERSION);
     manager.add_example_usage(R"(-f C:\Users\user\Desktop\file.txt)");
