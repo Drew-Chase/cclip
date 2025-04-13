@@ -7,7 +7,7 @@
 */
 
 #pragma once
-#define CCLIP_VERSION "0.0.9"
+#define CCLIP_VERSION "0.1.0"
 
 
 #ifndef OPTION_H
@@ -518,7 +518,7 @@ char *cclip::options_manager::build_autocomplete_ps1() const
 
     std::string ps1 =
             "# " + std::string(this->context) + " command-line autocomplete\n"
-            "Register-ArgumentCompleter -CommandName " + this->command_name + " -ScriptBlock {\n"
+            "Register-ArgumentCompleter -CommandName '" + this->command_name + "' -ScriptBlock {\n"
             "param($commandName, $wordToComplete, $cursorPosition)\n"
             "$options = " + options + "\n\n"
             "$options | Where-Object { $_ -like \"$wordToComplete * \" } | ForEach-Object {\n"

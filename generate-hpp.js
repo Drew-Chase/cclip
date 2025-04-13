@@ -16,7 +16,7 @@ const legalHeader = `/**
     For more information please visit our github page at https://github.com/Drew-Chase/cclip
 */`
 
-const version= '0.0.9';
+const version= '0.1.0';
 
 let content = '';
 // Include the content of all header files
